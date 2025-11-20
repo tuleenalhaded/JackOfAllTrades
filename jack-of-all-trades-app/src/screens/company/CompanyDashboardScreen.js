@@ -22,13 +22,13 @@ export default function CompanyDashboardScreen({ route, navigation }) {
       icon: '📊',
       title: 'Analytics',
       description: 'View usage statistics',
-      screen: null,
+      screen: 'Analytics',
     },
     {
       icon: '💳',
       title: 'Subscription',
       description: 'Manage billing',
-      screen: null,
+      screen: 'Subscription',
     },
   ];
 

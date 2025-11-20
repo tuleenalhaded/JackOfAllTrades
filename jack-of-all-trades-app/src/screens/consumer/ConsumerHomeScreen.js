@@ -94,6 +94,17 @@ export default function ConsumerHomeScreen({ navigation }) {
             </View>
           </TouchableOpacity>
         ))}
+
+        {/* Add Device Card */}
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('AddDevice')}
+          activeOpacity={0.7}
+        >
+          <View style={styles.addDeviceCard}>
+            <Text style={styles.addDeviceIcon}>+</Text>
+            <Text style={styles.addDeviceText}>Add Device</Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -160,5 +171,27 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: '#6b8e6b',
     letterSpacing: -1,
+  },
+  addDeviceCard: {
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    padding: 24,
+    marginBottom: 16,
+    borderWidth: 2,
+    borderColor: '#e8ede8',
+    borderStyle: 'dashed',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 140,
+  },
+  addDeviceIcon: {
+    fontSize: 40,
+    color: '#8fbc8f',
+    marginBottom: 8,
+  },
+  addDeviceText: {
+    fontSize: 16,
+    color: '#7a8a7a',
+    fontWeight: '400',
   },
 });

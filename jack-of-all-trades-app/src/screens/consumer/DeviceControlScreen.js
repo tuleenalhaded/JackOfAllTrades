@@ -13,7 +13,7 @@ export default function DeviceControlScreen({ route, navigation }) {
   // Universal Remote Control
   if (device.type === 'remote') {
     return (
-      <View style={styles.container}>
+      <View style={styles.remoteContainer}>
         <TouchableOpacity 
           style={styles.backButton}
           onPress={() => navigation.goBack()}
@@ -21,52 +21,88 @@ export default function DeviceControlScreen({ route, navigation }) {
           <Text style={styles.backText}>←</Text>
         </TouchableOpacity>
 
-        <View style={styles.content}>
-          <Text style={styles.deviceName}>{device.name}</Text>
-          
+        <View style={styles.remoteContent}>
+          <View style={styles.remoteTop}>
+            <Text style={styles.remoteName}>{device.name}</Text>
+            <Text style={styles.remoteChannel}>{device.channel}</Text>
+          </View>
+
+          {/* Power Button */}
           <TouchableOpacity 
-            style={[styles.powerButton, power && styles.powerButtonOn]}
+            style={[styles.remotePowerBtn, power && styles.remotePowerBtnOn]}
             onPress={() => setPower(!power)}
+            activeOpacity={0.7}
           >
-            <Text style={styles.powerIcon}>⏻</Text>
-            <Text style={styles.powerText}>{power ? 'On' : 'Off'}</Text>
+            <Text style={[styles.remotePowerIcon, power && styles.remotePowerIconOn]}>⏻</Text>
           </TouchableOpacity>
 
-          <View style={styles.remoteGrid}>
-            <TouchableOpacity style={styles.remoteButton}>
-              <Text style={styles.remoteButtonText}>▲</Text>
+          {/* D-Pad Navigation */}
+          <View style={styles.dPad}>
+            <TouchableOpacity style={styles.dPadUp} activeOpacity={0.6}>
+              <Text style={styles.dPadText}>▲</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.remoteButton}>
-              <Text style={styles.remoteButtonText}>◀</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.remoteButton}>
-              <Text style={styles.remoteButtonText}>OK</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.remoteButton}>
-              <Text style={styles.remoteButtonText}>▶</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.remoteButton}>
-              <Text style={styles.remoteButtonText}>▼</Text>
+            
+            <View style={styles.dPadMiddle}>
+              <TouchableOpacity style={styles.dPadLeft} activeOpacity={0.6}>
+                <Text style={styles.dPadText}>◀</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.dPadCenter} activeOpacity={0.6}>
+                <Text style={styles.dPadCenterText}>OK</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity style={styles.dPadRight} activeOpacity={0.6}>
+                <Text style={styles.dPadText}>▶</Text>
+              </TouchableOpacity>
+            </View>
+            
+            <TouchableOpacity style={styles.dPadDown} activeOpacity={0.6}>
+              <Text style={styles.dPadText}>▼</Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.volumeControl}>
-            <Text style={styles.volumeLabel}>Volume</Text>
-            <View style={styles.volumeButtons}>
+          {/* Volume & Channel Controls */}
+          <View style={styles.remoteControls}>
+            <View style={styles.remoteControlGroup}>
+              <Text style={styles.remoteControlLabel}>VOL</Text>
               <TouchableOpacity 
-                style={styles.volumeButton}
-                onPress={() => setVolume(Math.max(0, volume - 1))}
+                style={styles.remoteControlBtn}
+                onPress={() => setVolume(Math.min(100, volume + 5))}
               >
-                <Text style={styles.volumeButtonText}>−</Text>
+                <Text style={styles.remoteControlText}>+</Text>
               </TouchableOpacity>
-              <Text style={styles.volumeValue}>{volume}</Text>
+              <Text style={styles.remoteControlValue}>{volume}</Text>
               <TouchableOpacity 
-                style={styles.volumeButton}
-                onPress={() => setVolume(Math.min(100, volume + 1))}
+                style={styles.remoteControlBtn}
+                onPress={() => setVolume(Math.max(0, volume - 5))}
               >
-                <Text style={styles.volumeButtonText}>+</Text>
+                <Text style={styles.remoteControlText}>−</Text>
               </TouchableOpacity>
             </View>
+
+            <View style={styles.remoteControlGroup}>
+              <Text style={styles.remoteControlLabel}>CH</Text>
+              <TouchableOpacity style={styles.remoteControlBtn}>
+                <Text style={styles.remoteControlText}>▲</Text>
+              </TouchableOpacity>
+              <Text style={styles.remoteControlValue}>12</Text>
+              <TouchableOpacity style={styles.remoteControlBtn}>
+                <Text style={styles.remoteControlText}>▼</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Quick Access Buttons */}
+          <View style={styles.quickButtons}>
+            <TouchableOpacity style={styles.quickBtn}>
+              <Text style={styles.quickBtnText}>Netflix</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.quickBtn}>
+              <Text style={styles.quickBtnText}>Prime</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.quickBtn}>
+              <Text style={styles.quickBtnText}>HBO</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -485,5 +521,166 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#2d3e2d',
     fontWeight: '300',
+  },
+  // Remote Control Redesign
+  remoteContainer: {
+    flex: 1,
+    backgroundColor: '#2d3e2d',
+  },
+  remoteContent: {
+    flex: 1,
+    padding: 24,
+    alignItems: 'center',
+  },
+  remoteTop: {
+    alignItems: 'center',
+    marginBottom: 32,
+  },
+  remoteName: {
+    fontSize: 16,
+    color: '#fff',
+    opacity: 0.6,
+    marginBottom: 4,
+  },
+  remoteChannel: {
+    fontSize: 24,
+    color: '#fff',
+    fontWeight: '300',
+  },
+  remotePowerBtn: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+    borderWidth: 2,
+    borderColor: 'rgba(255,255,255,0.2)',
+  },
+  remotePowerBtnOn: {
+    backgroundColor: '#8fbc8f',
+    borderColor: '#8fbc8f',
+  },
+  remotePowerIcon: {
+    fontSize: 32,
+    color: '#fff',
+    opacity: 0.6,
+  },
+  remotePowerIconOn: {
+    opacity: 1,
+  },
+  dPad: {
+    width: 200,
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  dPadUp: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  dPadMiddle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  dPadLeft: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  dPadCenter: {
+    width: 70,
+    height: 70,
+    backgroundColor: '#8fbc8f',
+    borderRadius: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 8,
+  },
+  dPadRight: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  dPadDown: {
+    width: 60,
+    height: 60,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dPadText: {
+    fontSize: 20,
+    color: '#fff',
+    opacity: 0.8,
+  },
+  dPadCenterText: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: '500',
+  },
+  remoteControls: {
+    flexDirection: 'row',
+    gap: 40,
+    marginBottom: 32,
+  },
+  remoteControlGroup: {
+    alignItems: 'center',
+  },
+  remoteControlLabel: {
+    fontSize: 11,
+    color: '#fff',
+    opacity: 0.5,
+    marginBottom: 12,
+    letterSpacing: 1,
+  },
+  remoteControlBtn: {
+    width: 50,
+    height: 50,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 4,
+  },
+  remoteControlText: {
+    fontSize: 20,
+    color: '#fff',
+    opacity: 0.8,
+  },
+  remoteControlValue: {
+    fontSize: 18,
+    color: '#fff',
+    marginVertical: 8,
+  },
+  quickButtons: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  quickBtn: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 20,
+  },
+  quickBtnText: {
+    fontSize: 13,
+    color: '#fff',
+    fontWeight: '500',
   },
 });
