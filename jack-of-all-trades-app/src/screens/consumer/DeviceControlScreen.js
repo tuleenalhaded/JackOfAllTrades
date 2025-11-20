@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-paper';
 
+const BackButton = ({ onPress, color = '#2d3e2d' }) => (
+  <TouchableOpacity 
+    style={styles.backButton}
+    onPress={onPress}
+  >
+    <Text style={[styles.backText, { color }]}>←</Text>
+  </TouchableOpacity>
+);
+
 export default function DeviceControlScreen({ route, navigation }) {
   const { device } = route.params;
   const [temperature, setTemperature] = useState(device.temperature || 72);
@@ -14,12 +23,14 @@ export default function DeviceControlScreen({ route, navigation }) {
   if (device.type === 'remote') {
     return (
       <View style={styles.remoteContainer}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backText}>←</Text>
-        </TouchableOpacity>
+        <View style={styles.remoteHeader}>
+          <TouchableOpacity 
+            style={styles.remoteBackButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.remoteBackText}>Back</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.remoteContent}>
           <View style={styles.remoteTop}>
@@ -33,18 +44,23 @@ export default function DeviceControlScreen({ route, navigation }) {
             onPress={() => setPower(!power)}
             activeOpacity={0.7}
           >
-            <Text style={[styles.remotePowerIcon, power && styles.remotePowerIconOn]}>⏻</Text>
+            <View style={styles.powerIconContainer}>
+              <View style={[styles.powerIconCircle, power && styles.powerIconCircleOn]} />
+            </View>
+            <Text style={[styles.remotePowerText, power && styles.remotePowerTextOn]}>
+              {power ? 'ON' : 'OFF'}
+            </Text>
           </TouchableOpacity>
 
           {/* D-Pad Navigation */}
           <View style={styles.dPad}>
             <TouchableOpacity style={styles.dPadUp} activeOpacity={0.6}>
-              <Text style={styles.dPadText}>▲</Text>
+              <View style={styles.arrowUp} />
             </TouchableOpacity>
             
             <View style={styles.dPadMiddle}>
               <TouchableOpacity style={styles.dPadLeft} activeOpacity={0.6}>
-                <Text style={styles.dPadText}>◀</Text>
+                <View style={styles.arrowLeft} />
               </TouchableOpacity>
               
               <TouchableOpacity style={styles.dPadCenter} activeOpacity={0.6}>
@@ -52,12 +68,12 @@ export default function DeviceControlScreen({ route, navigation }) {
               </TouchableOpacity>
               
               <TouchableOpacity style={styles.dPadRight} activeOpacity={0.6}>
-                <Text style={styles.dPadText}>▶</Text>
+                <View style={styles.arrowRight} />
               </TouchableOpacity>
             </View>
             
             <TouchableOpacity style={styles.dPadDown} activeOpacity={0.6}>
-              <Text style={styles.dPadText}>▼</Text>
+              <View style={styles.arrowDown} />
             </TouchableOpacity>
           </View>
 
@@ -71,23 +87,27 @@ export default function DeviceControlScreen({ route, navigation }) {
               >
                 <Text style={styles.remoteControlText}>+</Text>
               </TouchableOpacity>
-              <Text style={styles.remoteControlValue}>{volume}</Text>
+              <View style={styles.volumeDisplay}>
+                <Text style={styles.remoteControlValue}>{volume}</Text>
+              </View>
               <TouchableOpacity 
                 style={styles.remoteControlBtn}
                 onPress={() => setVolume(Math.max(0, volume - 5))}
               >
-                <Text style={styles.remoteControlText}>−</Text>
+                <Text style={styles.remoteControlText}>-</Text>
               </TouchableOpacity>
             </View>
 
             <View style={styles.remoteControlGroup}>
               <Text style={styles.remoteControlLabel}>CH</Text>
               <TouchableOpacity style={styles.remoteControlBtn}>
-                <Text style={styles.remoteControlText}>▲</Text>
+                <View style={styles.smallArrowUp} />
               </TouchableOpacity>
-              <Text style={styles.remoteControlValue}>12</Text>
+              <View style={styles.volumeDisplay}>
+                <Text style={styles.remoteControlValue}>12</Text>
+              </View>
               <TouchableOpacity style={styles.remoteControlBtn}>
-                <Text style={styles.remoteControlText}>▼</Text>
+                <View style={styles.smallArrowDown} />
               </TouchableOpacity>
             </View>
           </View>
@@ -113,12 +133,14 @@ export default function DeviceControlScreen({ route, navigation }) {
   if (device.type === 'light') {
     return (
       <View style={styles.container}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backText}>←</Text>
-        </TouchableOpacity>
+        <View style={styles.topBar}>
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.backText}>Back</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.content}>
           <Text style={styles.deviceName}>{device.name}</Text>
@@ -127,7 +149,10 @@ export default function DeviceControlScreen({ route, navigation }) {
             style={[styles.lightCircle, power && styles.lightCircleOn]}
             onPress={() => setPower(!power)}
           >
-            <Text style={styles.lightIcon}>💡</Text>
+            <View style={[styles.lightBulb, power && styles.lightBulbOn]} />
+            <Text style={[styles.lightStatus, power && styles.lightStatusOn]}>
+              {power ? 'ON' : 'OFF'}
+            </Text>
           </TouchableOpacity>
 
           {power && (
@@ -159,12 +184,14 @@ export default function DeviceControlScreen({ route, navigation }) {
   if (device.type === 'lock') {
     return (
       <View style={styles.container}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backText}>←</Text>
-        </TouchableOpacity>
+        <View style={styles.topBar}>
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.backText}>Back</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.content}>
           <Text style={styles.deviceName}>{device.name}</Text>
@@ -173,7 +200,7 @@ export default function DeviceControlScreen({ route, navigation }) {
             style={[styles.lockCircle, locked && styles.lockCircleLocked]}
             onPress={() => setLocked(!locked)}
           >
-            <Text style={styles.lockIcon}>{locked ? '🔒' : '🔓'}</Text>
+            <View style={[styles.lockIcon, locked && styles.lockIconLocked]} />
           </TouchableOpacity>
 
           <Text style={styles.lockStatus}>
@@ -237,12 +264,14 @@ export default function DeviceControlScreen({ route, navigation }) {
   // Scale device
   return (
     <View style={styles.container}>
-      <TouchableOpacity 
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.backText}>←</Text>
-      </TouchableOpacity>
+      <View style={styles.topBar}>
+        <TouchableOpacity 
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.backText}>Back</Text>
+        </TouchableOpacity>
+      </View>
 
       <View style={styles.content}>
         <Text style={styles.deviceName}>{device.name}</Text>
@@ -272,15 +301,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f7f9f7',
   },
-  backButton: {
+  topBar: {
     paddingTop: 60,
-    paddingLeft: 24,
+    paddingHorizontal: 24,
     paddingBottom: 20,
   },
+  backButton: {
+    alignSelf: 'flex-start',
+  },
   backText: {
-    fontSize: 32,
-    color: '#2d3e2d',
-    fontWeight: '300',
+    fontSize: 15,
+    color: '#8fbc8f',
+    fontWeight: '500',
   },
   content: {
     flex: 1,
@@ -682,5 +714,150 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#fff',
     fontWeight: '500',
+  },
+});
+
+  // Arrow styles
+  arrowUp: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderBottomWidth: 12,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#fff',
+    opacity: 0.8,
+  },
+  arrowDown: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderTopWidth: 12,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#fff',
+    opacity: 0.8,
+  },
+  arrowLeft: {
+    width: 0,
+    height: 0,
+    borderTopWidth: 8,
+    borderBottomWidth: 8,
+    borderRightWidth: 12,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderRightColor: '#fff',
+    opacity: 0.8,
+  },
+  arrowRight: {
+    width: 0,
+    height: 0,
+    borderTopWidth: 8,
+    borderBottomWidth: 8,
+    borderLeftWidth: 12,
+    borderTopColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: '#fff',
+    opacity: 0.8,
+  },
+  smallArrowUp: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 6,
+    borderRightWidth: 6,
+    borderBottomWidth: 8,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#fff',
+    opacity: 0.8,
+  },
+  smallArrowDown: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 6,
+    borderRightWidth: 6,
+    borderTopWidth: 8,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#fff',
+    opacity: 0.8,
+  },
+  // Remote header
+  remoteHeader: {
+    paddingTop: 60,
+    paddingHorizontal: 24,
+    paddingBottom: 20,
+  },
+  remoteBackButton: {
+    alignSelf: 'flex-start',
+  },
+  remoteBackText: {
+    fontSize: 15,
+    color: '#8fbc8f',
+    fontWeight: '500',
+  },
+  powerIconContainer: {
+    marginBottom: 8,
+  },
+  powerIconCircle: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 3,
+    borderColor: '#fff',
+    opacity: 0.6,
+  },
+  powerIconCircleOn: {
+    backgroundColor: '#fff',
+    opacity: 1,
+  },
+  remotePowerText: {
+    fontSize: 13,
+    color: '#fff',
+    opacity: 0.6,
+    fontWeight: '600',
+    letterSpacing: 1,
+  },
+  remotePowerTextOn: {
+    opacity: 1,
+  },
+  volumeDisplay: {
+    minWidth: 40,
+    alignItems: 'center',
+  },
+  // Light bulb icon
+  lightBulb: {
+    width: 60,
+    height: 80,
+    backgroundColor: '#e8ede8',
+    borderRadius: 30,
+    marginBottom: 16,
+  },
+  lightBulbOn: {
+    backgroundColor: '#ffd700',
+  },
+  lightStatus: {
+    fontSize: 16,
+    color: '#7a8a7a',
+    fontWeight: '600',
+    letterSpacing: 1,
+  },
+  lightStatusOn: {
+    color: '#2d3e2d',
+  },
+  // Lock icon
+  lockIcon: {
+    width: 50,
+    height: 60,
+    backgroundColor: '#e8ede8',
+    borderRadius: 8,
+    borderWidth: 4,
+    borderColor: '#7a8a7a',
+  },
+  lockIconLocked: {
+    backgroundColor: '#fff',
+    borderColor: '#fff',
   },
 });

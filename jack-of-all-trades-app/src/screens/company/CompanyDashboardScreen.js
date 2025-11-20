@@ -35,6 +35,12 @@ export default function CompanyDashboardScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity 
+          onPress={() => navigation.goBack()}
+          style={styles.backButtonContainer}
+        >
+          <Text style={styles.backButtonText}>←</Text>
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>{companyName}</Text>
       </View>
 
@@ -91,6 +97,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backButtonContainer: {
+    marginRight: 16,
+    padding: 4,
+  },
+  backButtonText: {
+    fontSize: 28,
+    color: '#2d3e2d',
+    fontWeight: '300',
   },
   headerTitle: {
     fontSize: 24,

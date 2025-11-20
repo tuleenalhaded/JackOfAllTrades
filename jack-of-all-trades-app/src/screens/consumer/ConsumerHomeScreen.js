@@ -49,12 +49,12 @@ export default function ConsumerHomeScreen({ navigation }) {
 
   const getDeviceIcon = (type) => {
     switch(type) {
-      case 'remote': return '📺';
-      case 'thermostat': return '🌡️';
-      case 'light': return '💡';
-      case 'lock': return '🔒';
-      case 'fitness_scale': return '⚖️';
-      default: return '📱';
+      case 'remote': return 'TV';
+      case 'thermostat': return 'TEMP';
+      case 'light': return 'LIGHT';
+      case 'lock': return 'LOCK';
+      case 'fitness_scale': return 'SCALE';
+      default: return 'DEV';
     }
   };
 
@@ -72,6 +72,12 @@ export default function ConsumerHomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity 
+          onPress={() => navigation.goBack()}
+          style={styles.backBtn}
+        >
+          <Text style={styles.backBtnText}>Back</Text>
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>My Devices</Text>
         <Text style={styles.headerSubtitle}>{devices.length} connected</Text>
       </View>
@@ -120,6 +126,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingBottom: 24,
     backgroundColor: '#f7f9f7',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backButtonContainer: {
+    marginRight: 16,
+    padding: 4,
+  },
+  backButtonText: {
+    fontSize: 32,
+    color: '#2d3e2d',
+    fontWeight: '300',
   },
   headerTitle: {
     fontSize: 32,
@@ -152,7 +169,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   deviceIcon: {
-    fontSize: 32,
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#8fbc8f',
+    letterSpacing: 0.5,
   },
   statusDot: {
     width: 8,
@@ -185,9 +205,10 @@ const styles = StyleSheet.create({
     minHeight: 140,
   },
   addDeviceIcon: {
-    fontSize: 40,
+    fontSize: 32,
     color: '#8fbc8f',
     marginBottom: 8,
+    fontWeight: '300',
   },
   addDeviceText: {
     fontSize: 16,
