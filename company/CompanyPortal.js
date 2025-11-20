@@ -16,7 +16,7 @@ class CompanyPortal {
   async login() {
     return new Promise((resolve) => {
       console.log('\n' + '═'.repeat(60));
-      console.log('  🏢 COMPANY PORTAL LOGIN');
+      console.log('  🏢 JACK OF ALL TRADES - COMPANY PORTAL');
       console.log('═'.repeat(60) + '\n');
       
       this.rl.question('Enter your company name: ', (name) => {

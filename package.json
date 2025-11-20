@@ -1,7 +1,7 @@
 {
-  "name": "universal-iot-platform",
+  "name": "jack-of-all-trades",
   "version": "1.0.0",
-  "description": "Skeleton framework for unified IoT device control",
+  "description": "Jack of All Trades - One app to control all your IoT devices",
   "scripts": {
     "start": "node app.js",
     "demo:thermostat": "node examples/thermostat/demo.js",

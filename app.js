@@ -10,7 +10,8 @@ const rl = readline.createInterface({
 function showWelcome() {
   console.clear();
   console.log('\n' + '═'.repeat(60));
-  console.log('  🏠 UNIVERSAL IoT CONTROL PLATFORM');
+  console.log('  � JACK OF LALL TRADES');
+  console.log('  One App. All Your Devices.');
   console.log('═'.repeat(60));
   console.log('\n  Welcome! Please select your role:\n');
   console.log('  [1] 👤 Consumer - Control my devices');

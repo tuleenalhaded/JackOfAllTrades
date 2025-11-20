@@ -42,7 +42,7 @@ class ConsumerApp {
 
   showDashboard() {
     console.log('\n' + '═'.repeat(60));
-    console.log('  👤 CONSUMER DASHBOARD');
+    console.log('  🃏 JACK OF ALL TRADES - My Devices');
     console.log('═'.repeat(60));
     console.log('\n  Your Connected Devices:\n');
     

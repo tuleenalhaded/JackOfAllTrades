@@ -1,6 +1,8 @@
-# Universal IoT Control Platform
+# Jack of All Trades
 
-A skeleton framework for companies to build customized device control interfaces without forcing consumers to download separate apps for every appliance.
+**The Universal IoT Control Platform**
+
+One app to control them all. A skeleton framework for companies to build customized device control interfaces without forcing consumers to download separate apps for every appliance.
 
 ## Core Concept
 - Single app for all IoT devices
