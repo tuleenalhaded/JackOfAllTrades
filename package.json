@@ -1,0 +1,12 @@
+{
+  "name": "universal-iot-platform",
+  "version": "1.0.0",
+  "description": "Skeleton framework for unified IoT device control",
+  "scripts": {
+    "start": "node app.js",
+    "demo:thermostat": "node examples/thermostat/demo.js",
+    "demo:scale": "node examples/scale/demo.js"
+  },
+  "keywords": ["iot", "smart-home", "device-control", "platform"],
+  "license": "MIT"
+}
